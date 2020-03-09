@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 @EnableScheduling
 public class ErpApplication{
     public static void main(String[] args) {
+        System.out.println("系统启动中了。。。。");
         SpringApplication.run(ErpApplication.class, args);
     }
 }
