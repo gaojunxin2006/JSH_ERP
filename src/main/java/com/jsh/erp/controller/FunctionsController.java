@@ -35,6 +35,7 @@ public class FunctionsController {
     @Resource
     private UserBusinessService userBusinessService;
 
+    //显示目录
     @PostMapping(value = "/findMenu")
     public JSONArray findMenu(@RequestParam(value="pNumber") String pNumber,
                               @RequestParam(value="hasFunctions") String hasFunctions,
@@ -43,12 +44,14 @@ public class FunctionsController {
         JSONArray dataArray = new JSONArray();
         try {
             String fc = hasFunctions; //当前用户所拥有的功能列表，格式如：[1][2][5]
-            List<Functions> dataList = functionsService.getRoleFunctions(pNumber);
+            List<Functions> dataList = functionsService.getRoleFunctions(pNumber);      //查询一级目录
+            System.out.println("FunctionsController findMenu显示目录方法"+dataList);
             if (null != dataList) {
                 for (Functions functions : dataList) {
                     JSONObject item = new JSONObject();
                     item.put("id", functions.getId());
                     List<Functions> dataList1 = functionsService.getRoleFunctions(functions.getNumber());
+                    System.out.println("54 FunctionsController findMenu显示目录方法"+dataList1);
                     JSONArray dataArray1 = new JSONArray();
                     if (dataList1.size() != 0) {
                         item.put("text", functions.getName()); //是目录就没链接

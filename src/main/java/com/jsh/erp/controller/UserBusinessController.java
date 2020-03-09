@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,8 @@ public class UserBusinessController {
     @Resource
     private UserService userService;
 
+
+    //调用用户角色权限
     @GetMapping(value = "/getBasicData")
     public BaseResponseInfo getBasicData(@RequestParam(value = "KeyId") String keyId,
                                          @RequestParam(value = "Type") String type,
@@ -41,6 +44,7 @@ public class UserBusinessController {
         try {
             List<UserBusiness> list = userBusinessService.getBasicData(keyId, type);
             Map<String, List> mapData = new HashMap<String, List>();
+           // System.out.println("UserBusinessController getBasicDatafang方法 返回的查询集合是： "+ Arrays.toString(list.toArray()));
             mapData.put("userBusinessList", list);
             res.code = 200;
             res.data = mapData;

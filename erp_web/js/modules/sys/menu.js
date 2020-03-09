@@ -18,6 +18,7 @@ function initSystemData(kid, type) {
         //设置为同步
         async: false,
         dataType: "json",
+        //通过controller查询返回res对象
         success: function (res) {
             if (res && res.code === 200) {
                 userBusinessList = res.data.userBusinessList;
@@ -71,7 +72,7 @@ if (btnStrList.length > 0) {
 }
 $.ajax({
     type: "post",
-    url: "/functions/findMenu",
+    url: "/functions/findMenu",     //查找目录
     data: ({
         pNumber: 0,
         hasFunctions: functions
