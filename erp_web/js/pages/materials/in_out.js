@@ -333,6 +333,11 @@
 		    }
 		});
 	}
+
+
+
+
+
 	//初始化表格数据
 	function initTableData(){
 		if(pageType === "skip") {
@@ -400,7 +405,7 @@
 				organNameTitle = "供应商名称";
 			}
 			else if(listTitle == "销售订单列表" || listTitle == "销售退货列表" || listTitle == "销售出库列表" || listTitle == "其它出库列表"){
-				organNameTitle = "客户名称";
+				organNameTitle = "客户名称4444";
 			}
 			else if(listTitle == "零售出库列表" || listTitle == "零售退货列表"){
 				organNameTitle = "会员卡号";
@@ -418,6 +423,8 @@
             isShowSkip = true;
             opTitle = "转销售出库";
 		}
+
+        //渲染商品信息列表
 		$('#tableData').datagrid({
 			height:heightInfo,
 			rownumbers: false,
@@ -447,16 +454,21 @@
 						return str;
 					}
 				},
+
+				<!-- 客户名称 -->
 				{ title: organNameTitle, field: 'organName',width:120, hidden:isShowOrganNameColumn},
-				{ title: '单据编号',field: 'number',width:155, formatter:function (value,rec) {
+				{ title: '单据编号4444',field: 'number',width:155, formatter:function (value,rec) {
 						if(rec.linknumber) {
+							alert("in_out.js 461 单据编号是：\t"+res.LinkNumber);
 							return value + "[转]";
 						} else {
+							alert("in_out.js 461 单据编号是：\t"+value);
+							alert("in_out.js 466res.linknumber是什么东西"+rec.linknumber);
 							return value;
 						}
 					}
 				},
-				{ title: '商品信息',field: 'materialsList',width:200,formatter:function(value){
+				{ title: '商品信息4444',field: 'materialsList',width:200,formatter:function(value){
 						if(value) {
                             return value.replace(",","，");
 						}
@@ -494,6 +506,10 @@
 		});
         dgResize();
 	}
+
+
+
+
 	//查找库存的方法
 	function findStockNumById(depotId, meId, monthTime, body, input, ratio, type){
 		var thisRatio = 1; //比例
@@ -1574,7 +1590,7 @@
 			}
 		}
 	}
-	//绑定操作事件
+	//绑定操作事件  执行搜索是触发
 	function bindEvent(){
 		showDepotHeadDetails(1,initPageSize); //初始化时自动查询
 		//搜索处理
@@ -1582,6 +1598,8 @@
 			showDepotHeadDetails(1,initPageSize);
 			var opts = $("#tableData").datagrid('options');
 			var pager = $("#tableData").datagrid('getPager');
+			alert("1585 in_out.js 这里会执行吗？"+opts);
+			alert("1586 in_out.js 这里会执行吗？"+pager);
 			opts.pageNumber = 1;
 			opts.pageSize = initPageSize;
 			pager.pagination('refresh',
@@ -2201,7 +2219,7 @@
 
 	}
 
-	//查询单据列表信息
+	//查询单据列表信息（比如销售订单）
 	function showDepotHeadDetails(pageNo,pageSize){
 		var materialParam = $.trim($("#searchMaterial").val());
         var beginTime = $.trim($("#searchBeginTime").val());
@@ -2233,6 +2251,9 @@
 			success: function (res) {
 				if(res && res.code === 200){
 					if(res.data && res.data.page) {
+						//#tableDate就是表单页面的列表明细
+						alert("2237in_out.js  获取到的后台数据是"+res.data+"===-_-==="+pageNo);
+						alert("2237in_out.js  获取到的后台数据是"+res.data.page+"===-_-===="+pageSize);
 						$("#tableData").datagrid('loadData', res.data.page);
 					}
 				}
