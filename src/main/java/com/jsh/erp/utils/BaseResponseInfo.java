@@ -1,5 +1,8 @@
 package com.jsh.erp.utils;
 
+import lombok.Data;
+
+@Data
 public class BaseResponseInfo {
 	public int code;
 	public Object data;

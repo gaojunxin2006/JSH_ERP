@@ -44,7 +44,7 @@ public class UserBusinessController {
         try {
             List<UserBusiness> list = userBusinessService.getBasicData(keyId, type);
             Map<String, List> mapData = new HashMap<String, List>();
-           // System.out.println("UserBusinessController getBasicDatafang方法 返回的查询集合是： "+ Arrays.toString(list.toArray()));
+            System.out.println("47行 UserBusinessController getBasicDatafang方法 返回的查询集合是： "+ Arrays.toString(list.toArray())+"传进来的keyid是：\t"+keyId+"\t传进来的type是：\t"+type);
             mapData.put("userBusinessList", list);
             res.code = 200;
             res.data = mapData;
@@ -53,6 +53,8 @@ public class UserBusinessController {
             res.code = 500;
             res.data = "查询权限失败";
         }
+        System.out.println("56行 UserBusinessController getBasicDatafang方法 返回的查询集合是： "+ res);
+
         return res;
     }
 
