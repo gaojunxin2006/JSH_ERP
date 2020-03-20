@@ -338,6 +338,7 @@
 
 
 
+
 	//初始化表格数据
 	function initTableData(){
 		if(pageType === "skip") {
@@ -768,7 +769,7 @@
 			toolbar:[
 				{
 					id:'append',
-					text:'新增行',
+					text:'新增行444',
 					iconCls:'icon-add',
 					handler:function() {
 						append(); //新增行
@@ -2391,6 +2392,10 @@
 			}
 	    },500);
 	}
+
+
+
+
 	//结束编辑明细
 	function endEditing() {
 	    if (editIndex == undefined) { return true }
@@ -2411,6 +2416,9 @@
 	        return false;
 	    }
 	}
+
+
+
 	//单击明细
 	function onClickRow(index) {
 	    if (editIndex != index) {
@@ -2427,15 +2435,24 @@
 	        }
 	    }
 	}
-	//新增明细
+
+
+
+
+	//新增明细行
 	function append(){
 	    if (endEditing()) {
+	    	alert("in_out.js 2468 新增产品明细");
 	        $('#materialData').datagrid('appendRow', {DepotId:defDepotId});
 	        editIndex = $('#materialData').datagrid('getRows').length - 1;
 	        $('#materialData').datagrid('selectRow', editIndex).datagrid('beginEdit', editIndex);
 	        autoReckon();
 	    }
 	}
+
+
+
+
 	//批量删除明细
 	function batchDel(){
         /**

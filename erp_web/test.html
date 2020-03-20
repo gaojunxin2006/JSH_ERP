@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试监听表单</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/jsherp.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/in_out.css"/>
+    <script src="/js/jquery-1.8.0.min.js"></script>
+    <script src="/js/easyui/jquery.easyui.min.js"></script>
+    <script src="/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script src="/js/handlebars.js"></script>
+    <script src="/js/My97DatePicker/WdatePicker.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/jsherp.js"></script>
+    <script src="js/jquery/jquery-1.12.4.min.js"></script>
+
+    <script type="text/javascript">
+
+
+
+
+        $(function () {
+            alert('test执行了吗！');
+
+            $.ajax({
+                url:'/cust/getCust',
+                type:'get',
+                success(re){
+                    var re2=JSON.stringify(re);
+                    alert("35"+re2);
+                },
+                error:function () {
+                    alert('38 请求出错！');
+                }
+
+            })
+
+
+            $("#dg").datagrid({
+                //加载的json文件路径
+                //单条件
+
+                url:'/cust/getCust',
+
+                //展示json的格式
+                columns:[[
+
+                    //每行的单选框
+                    {checkbox:true},
+                    {field:'productid',title:'Code',width:100},
+                    {field:'productname',title:'Name',width:100},
+                    {field:'unitcost',title:'Price',width:100,align:'right'}
+
+                ]]
+
+
+            })
+        });
+
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+
+我想我晒冬天的大海。。。。。。。。
+
+<div>
+    <table id="dg">
+
+
+    </table>
+
+</div>
+
+</body>
+</html>

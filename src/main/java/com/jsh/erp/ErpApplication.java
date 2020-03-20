@@ -14,7 +14,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.http.Cookie;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.jsh.erp.datasource.mappers"})
+@MapperScan(basePackages = {"com.jsh.erp.datasource.mappers","com.jsh.erp.service"})
 @ServletComponentScan
 @EnableScheduling
 public class ErpApplication{

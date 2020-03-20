@@ -46,12 +46,15 @@ public class ResourceController {
         }
     }
 
+
+    //查询多有请求比如销售订单，返回jason数据
     @GetMapping(value = "/{apiName}/list")
     public String getList(@PathVariable("apiName") String apiName,
                         @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                         @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                         @RequestParam(value = Constants.SEARCH, required = false) String search,
                         HttpServletRequest request)throws Exception {
+        System.out.println("============= 55行 ResourceController getList方法。"+"\t页面大小：\t"+pageSize+"\t起始页：\t"+currentPage+"\t搜索条件：\t"+search);
         Map<String, String> parameterMap = ParamUtils.requestToMap(request);
         parameterMap.put(Constants.SEARCH, search);
         PageQueryInfo queryInfo = new PageQueryInfo();

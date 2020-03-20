@@ -22,6 +22,7 @@
     <script src="/js/pages/materials/add_temp2.js"></script>
     <script src="/js/pages/materials/in_out2.js"></script>
     <script src="/js/pages/materials/test.js"></script>
+
 </head>
 <body>
 <!-- 数据显示table -->
@@ -59,16 +60,14 @@
 <div id="depotHeadDlg"  class="easyui-dialog" style="width:750px;padding:10px 20px;top:60px;height: 600px"
      closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" closable="true">
 
-    <form id="depotHeadFM" action="http://www.baidu.com" method="post"  >
+    <form id="depotHeadFM" method="post"  novalidate>
         <table>
             <tr>
                 <td style="width:70px;">合约名称:</td>
                 <td style="padding:5px">
-                    <input id="agreementName" name="agreementName" class="radius-ui" style="width:230px;"/>
+                    <input id="agreementName" name="agreementName" onfocus="findCust()" class="radius-ui" style="width:230px;"/>
                 </td>
                 <td style="width:100px;"></td>
-
-
             </tr>
 
 
@@ -77,12 +76,12 @@
                 <td style=" width:70px;">客户名称：  </td>
                 <td>
                     <div class="org-list">
-                        <input id="OrganId" name="OrganId" style="width:230px;"/>
+                        <input id="OrganId" onmouseover="findCust()" name="OrganId" style="width:230px;"/>
                     </div>
                 </td>
                 <td>
                     <div class="add-org-btn">
-                        <img id="addCustomer" src="/js/easyui/themes/icons/edit_add.png"
+                        <img id="addCustomer2" src="/js/easyui/themes/icons/edit_add.png"
                              style="cursor: pointer;" alt="增加客戶" title="增加客戶"/>
                     </div>
                 </td>
@@ -119,9 +118,14 @@
             <tr>
                 <td style="width:70px;">产品名称：</td>
                 <td style="padding:5px">
-                    <input id="MaterialName" name="MaterialName" class="radius-ui" style="width:230px;"/>
+                    <input id="MaterialName"  name="MaterialName" class="radius-ui" style="width:230px;"/>
                 </td>
-                <td style="width:100px;"></td>
+                <td>
+                    <div class="add-org-btn">
+                        <img id="addMaterialName" src="/js/easyui/themes/icons/edit_add.png"
+                             style="cursor: pointer;" alt="查找产品" title="查找产品"/>
+                    </div>
+                </td>
             </tr>
 
 
@@ -147,7 +151,7 @@
    <tr>
             <td style="width:70px;">合计金额：</td>
             <td style="padding:5px">
-                <input id="sum" name="sum" class="radius-ui" style="width:230px;"/>
+                <input id="xsum" name="xsum" class="radius-ui" style="width:230px;"/>
             </td>
             <td style="width:100px;"></td>
         </tr>
@@ -171,12 +175,10 @@
             </tr>
 
             <div id="dlg-buttons">
-                <input type="submit" id="saveDepotHead " class="easyui-linkbutton" iconCls="icon-ok" value="保存">
 
-                <input type="reset" value="取消" class="easyui-linkbutton" iconCls="icon-cancel">
-                <!--            <a href="javascript:void(0)" id="saveDepotHead" class="easyui-linkbutton" iconCls="icon-ok">保存</a>-->
-                <!--            <a href="javascript:void(0)" id="cancelDepotHead" class="easyui-linkbutton" iconCls="icon-cancel"-->
-                <!--               onclick="javascript:$('#depotHeadDlg').dialog('close')">取消</a>-->
+                            <a href="javascript:void(0)" id="saveDepotHead2" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+                            <a href="javascript:void(0)" id="cancelDepotHead" class="easyui-linkbutton" iconCls="icon-cancel"
+                               onclick="javascript:$('#depotHeadDlg').dialog('close')">取消</a>
             </div>
 
 
@@ -187,9 +189,218 @@
     </form>
 
 
+</div>
 
 
 
+<!--通过监听器监听表单实现自动计算-->
+
+<script type="text/javascript">
+
+
+    //测试的js代码
+
+    function findCust(){
+
+        //这个代码有问题,弹出一个页面
+        //window.open($('#custDiv'));
+
+    };
+
+
+
+
+    //===============================================================================================================
+
+    var kl1=$('#materialName').val();
+
+        //弹出一个窗口
+        $('#MaterialName').click(function () {
+            if (kl1==null||kl1==""){
+                addFile();
+            }
+        })
+
+
+        //点击按钮
+        $('#addMaterialName').click(function () {
+            addFile();
+        })
+
+
+
+        function addFile(){
+            $('#win').dialog({
+                title: '新增',
+                width: 450,
+                height: 240,
+                top:150,
+                closed: false,//显示对话框
+                cache: false,
+                modal: true
+            })
+
+        };
+
+
+        //隐藏列表
+        function submitForm(){
+            $('#win').dialog({
+                closed: true, // 隱藏列表
+            });
+            var input1=$('#input1').val();
+            mater=input1;
+            //把值写入到表单中
+            kl1=$('#MaterialName').val(input1);
+        }
+
+
+
+//================================================================================================
+
+    //监听数量
+    $(function () {
+        $('#MaterialNum').bind('input',function () {
+            var a=$('#MaterialNum').val();
+            var b=$('#RetailPrice').val();
+            var sum=a *b;
+            $('#xsum').val(sum);
+        } )
+    });
+
+
+
+//监听价格
+    $(function () {
+        $('#RetailPrice').bind('input',function () {
+
+            var a=$('#MaterialNum').val();
+            var b=$('#RetailPrice').val();
+            var sum=a *b;
+            $('#xsum').val(sum);
+        } )
+    });
+
+
+</script>
+
+
+
+
+<div id="supplier"></div>
+<div id="depot"></div>
+
+
+<div id="win" class="easyui-dialog" title="提示"  style="width: 400px; padding: 10px 20px; height: 410px;"
+     closed="true" buttons="#dlg-buttons2">
+    <form id="fm" name="frm" method="post" style="margin-top: 20px; margin-left: 20px;">
+        <div class="fitem">
+            <label>文件名称:</label>
+            <textarea id="input1"  name="fileName" data-options="multiline:true" style="width: 260px;height:90px;"></textarea>
+        </div>
+        <div id="dlg-buttons2" style="display: block">
+            <a id="confirm" href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="submitForm()" style="width: 90px">提交</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript:$('#win').dialog('close')" style="width: 90px">取消</a>
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    //渲染商品信息列表
+
+    $(function () {
+
+        //点击查找客户
+        $('#addCustomer2').click(function () {
+            addcust2();
+        })
+
+        function addcust2(){
+            $('#findcust2').dialog({
+                title: '查找客户',
+                width: 450,
+                height: 400,
+                top:150,
+                closed: false,//显示对话框
+                cache: false,
+                modal: true
+            })
+
+        };
+
+
+
+        alert("332 我要查找json文件");
+        $.ajax({
+
+             // url:'/js/datagrid.json',
+             url:'/cust/getCust2',
+            type:'get',
+            dataType:'json',
+            success(str){
+                 var re2=JSON.stringify(str);
+                 alert("339"+re2);
+                alert(str);
+            },
+            error:function () {
+                alert('342 请求出错！');
+            }
+        })
+
+
+        $('#tableData2').datagrid({
+            // url:'/cust/getCust2',
+            url:'/cust/getcust3',
+            // url:'192.168.0.191:8080/datagrid.json',
+            // height: heightInfo,
+            width:350,
+            rownumbers: true,
+            //动画效果
+            animate: false,
+            //选中单行
+            singleSelect: true,
+            collapsible: false,
+            selectOnCheck: false,
+            pagination: true,
+            //交替出现背景
+            striped: true,
+            pageSize: 5,
+            pageList: [5,10,15],
+            columns: [[
+
+                { field:'id',width:35,align:"center",title:'编号'},
+                { title:'客户名称',field:'supplier',width:155}
+                // {checkbox:true},
+                // {field:'productid',title:'Code',width:100},
+                // {field:'productname',title:'Name',width:100},
+                // {field:'unitcost',title:'Price',width:100,align:'right'}
+            ]]
+
+
+
+
+        })
+
+
+
+
+    })
+
+
+</script>
+
+
+
+
+<!-- 客户搜索表单 -->
+<div id="findcust2" class="easyui-dialog" title="提示"  style="width: 400px; padding: 10px 20px;
+height: 310px;"
+     closed="true" buttons="#dlg-buttons2">
+    <form id="fm2" name="fm2" method="post" style="margin-top: 20px; margin-left: 20px;">
+        <table id="tableData2"  class="easyui-datagrid"  style="top:300px;border-bottom-color:#FFFFFF">
+        </table>
+    </form>
 
 
 
@@ -197,154 +408,8 @@
 
 
 
-<!--<div id="depotHeadDlg" class="easyui-dialog" style="width:1200px;padding:10px 20px;top:60px"-->
-<!--     closed="true" buttons="#dlg-buttons" modal="true" cache="false" collapsible="false" closable="true">-->
-<!--    <form id="depotHeadFM" method="post" novalidate>-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td style="width:70px;">客户</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <div class="org-list">-->
-<!--                        <input id="OrganId" name="OrganId" style="width:130px;"/>-->
-<!--                    </div>-->
-<!--                    <div class="add-org-btn">-->
-<!--                        <img id="addCustomer" src="/js/easyui/themes/icons/edit_add.png"-->
-<!--                             style="cursor: pointer;" alt="增加客戶" title="增加客戶"/>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--                <td style="width:70px;">单据日期</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input type="text" name="OperTime" id="OperTime"-->
-<!--                           onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="txt Wdate radius-ui"-->
-<!--                           style="width:160px;" readonly/>-->
-<!--                </td>-->
-<!--                <td style="width:80px;">单据编号</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input name="Number" id="Number" class="easyui-validatebox radius-ui"-->
-<!--                           data-options="validType:'length[2,30]'" style="width: 150px;" readonly/>-->
-<!--                </td>-->
-<!--                <td style="width:70px;">销售人员</td>-->
-<!--                <td style="padding:5px">-->
-<!--                    <input id="Salesman" name="Salesman" class="radius-ui" style="width:130px;"/>-->
-<!--                </td>-->
-<!--                <td style="width:100px;"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td colspan="9">-->
-<!--                    &lt;!&ndash; 商品列表table &ndash;&gt;-->
-<!--                    <table id="materialData" style="top:100px;border-bottom-color:#FFFFFF"></table>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td colspan="9">-->
-<!--                    <textarea name="Remark" id="Remark" rows="2" cols="2" class="radius-ui" placeholder="暂无备注信息"-->
-<!--                              style="width: 1130px; height:35px;"></textarea>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<div id="dlg-buttons">-->
-<!--    <a href="javascript:void(0)" id="saveDepotHead" class="easyui-linkbutton" iconCls="icon-ok">保存</a>-->
-<!--    <a href="javascript:void(0)" id="cancelDepotHead" class="easyui-linkbutton" iconCls="icon-cancel"-->
-<!--       onclick="javascript:$('#depotHeadDlg').dialog('close')">取消</a>-->
-<!--</div>-->
 
 
-<!--<div id="depotHeadDlgShow" class="easyui-dialog" style="width:1200px;padding:10px 20px;top:60px"-->
-<!--     closed="true" buttons="#dlg-buttons-show" modal="true" cache="false" collapsible="false" closable="true">-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <td style="width:60px;">客户：</td>-->
-<!--            <td style="padding:5px;width:130px;">-->
-<!--                <span id="OrganIdShow"></span>-->
-<!--            </td>-->
-<!--            <td style="width:70px;">单据日期：</td>-->
-<!--            <td style="padding:5px;width:140px;">-->
-<!--                <span id="OperTimeShow"></span>-->
-<!--            </td>-->
-<!--            <td style="width:80px;">单据编号：</td>-->
-<!--            <td style="padding:5px;width:140px;">-->
-<!--                <span id="NumberShow"></span>-->
-<!--            </td>-->
-<!--            <td style="width:70px;">销售人员：</td>-->
-<!--            <td style="padding:5px;width:130px;">-->
-<!--                <span id="SalesmanShow"></span>-->
-<!--            </td>-->
-<!--            <td style="width:100px;"></td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td colspan="9" style="width: 1130px;">-->
-<!--                &lt;!&ndash; 商品列表table &ndash;&gt;-->
-<!--                <table id="materialDataShow" style="top:100px;border-bottom-color:#FFFFFF"></table>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td style="width:60px;">单据备注：</td>-->
-<!--            <td colspan="8" style="height:35px;">-->
-<!--                <span id="RemarkShow" style="width: 1070px; height:35px;"></span>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-<!--<div id="dlg-buttons-show">-->
-<!--    <a href="javascript:void(0)" id="printDepotHeadShow" class="easyui-linkbutton" iconCls="icon-print">打印</a>-->
-<!--    <a href="javascript:void(0)" id="cancelDepotHeadShow" class="easyui-linkbutton" iconCls="icon-cancel"-->
-<!--       onclick="javascript:$('#depotHeadDlgShow').dialog('close')">取消</a>-->
-<!--</div>-->
-<!--<div id="depotHeadAccountDlg" class="easyui-dialog" style="width:380px;padding:10px 20px;top:80px"-->
-<!--     closed="true" modal="true" buttons="#accountDlgButtons" cache="false" collapsible="false" closable="true">-->
-<!--    <table class="account-dlg">-->
-<!--        <tr class="account-head-tmp">-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px; padding:5px;">结算账户</td>-->
-<!--            <td style="width:100px; padding:5px;">金额</td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px;text-align: center;">合计：</td>-->
-<!--            <td style="width:100px;"><span id="accountMoneyTotalDlg"></span></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--    <table class="tabs-tmp">-->
-<!--        <tr class="account-content-tmp">-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px; padding:3px;"><select class="account-id-dlg" style="width:140px;"></select></td>-->
-<!--            <td style="width:100px; padding:3px;"><input class="account-money-dlg" style="width:100px;"/></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-<!--<div id="accountDlgButtons">-->
-<!--    <a href="javascript:void(0)" id="saveDepotHeadAccountDlg" class="easyui-linkbutton" iconCls="icon-ok">保存</a>-->
-<!--    <a href="javascript:void(0)" id="cancelDepotHeadAccountDlg" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>-->
-<!--</div>-->
-<!--<div id="otherMoneyDlg" class="easyui-dialog" style="width:380px;padding:10px 20px;top:80px"-->
-<!--     closed="true" modal="true" buttons="#otherMoneyDlgBtn" cache="false" collapsible="false" closable="true">-->
-<!--    <table class="money-dlg">-->
-<!--        <tr class="money-head-tmp">-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px; padding:5px;">支出项目</td>-->
-<!--            <td style="width:100px; padding:5px;">金额</td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px;text-align: center;">合计：</td>-->
-<!--            <td style="width:100px;"><span id="otherMoneyTotalDlg"></span></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--    <table class="tabs-tmp">-->
-<!--        <tr class="money-content-tmp">-->
-<!--            <td style="width:30px;"></td>-->
-<!--            <td style="width:140px; padding:3px;"><select class="money-id-dlg" style="width:140px;"></select></td>-->
-<!--            <td style="width:100px; padding:3px;"><input class="other-money-dlg" style="width:100px;"/></td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-<!--<div id="otherMoneyDlgBtn">-->
-<!--    <a href="javascript:void(0)" id="saveOtherMoneyDlg" class="easyui-linkbutton" iconCls="icon-ok">保存</a>-->
-<!--    <a href="javascript:void(0)" id="cancelOtherMoneyDlg" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>-->
-<!--</div>-->
-<div id="supplier"></div>
-<div id="depot"></div>
+
 </body>
 </html>
