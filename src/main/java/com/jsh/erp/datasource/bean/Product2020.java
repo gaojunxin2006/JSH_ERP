@@ -41,7 +41,7 @@ public class Product2020 {
     private String supplierName;
 
     //备注
-    private String Premarks;
+    private String premarks;
 
 
 

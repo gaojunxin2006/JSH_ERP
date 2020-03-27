@@ -8,13 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.http.Cookie;
 
-@SpringBootApplication
-@MapperScan(basePackages = {"com.jsh.erp.datasource.mappers","com.jsh.erp.service"})
+@SpringBootApplication()
+@MapperScan(basePackages = {"com.jsh.erp.datasource.mappers","com.jsh.erp.service.*"})
 @ServletComponentScan
 @EnableScheduling
 public class ErpApplication{

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsh.erp.datasource.mappers.GjxShopperMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jsh.erp.datasource.bean.GjxSellsuser">
+    <result column="id" property="id" />
+        <result column="shopper_name" property="shopperName" />
+        <result column="contacts_name" property="contactsName" />
+        <result column="phone" property="phone" />
+        <result column="tell" property="tell" />
+        <result column="email" property="email" />
+        <result column="address" property="address" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        shopper_name, contacts_name, phone, tell, email, address, remarks
+    </sql>
+
+</mapper>

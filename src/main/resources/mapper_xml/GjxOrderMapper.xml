@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsh.erp.datasource.mappers.GjxOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jsh.erp.datasource.bean.GjxOrder">
+        <result column="id" property="id" />
+        <result column="orderId" property="orderId" />
+        <result column="createTime" property="createTime" />
+        <result column="orderName" property="orderName"/>
+        <result column="quantity" property="quantity" />
+        <result column="productPrice" property="productPrice" />
+        <result column="total" property="total" />
+        <result column="costSum" property="costSum" />
+        <result column="profit" property="profit" />
+    <!--配置多对一的关联
+        <collection property="define" column="define" ofType="com.jsh.erp.datasource.bean.GjxShopper">
+            <result column="id" property="id" />
+            <result column="shopper_name" property="shopperName" />
+            <result column="contacts_name" property="contactsName" />
+            <result column="phone" property="phone" />
+            <result column="tell" property="tell" />
+            <result column="email" property="email" />
+            <result column="address" property="address" />
+            <result column="remarks" property="remarks" />
+        </collection>
+
+-->
+
+        <collection property="define" column="define" select="findDefine" javaType="com.jsh.erp.datasource.bean.GjxShopper"/>
+        <collection property="product" column="product" select="findProduct"/>
+        <collection property="sellsUsers" column="sellsUsers" select="findSellsUsers" />
+
+    </resultMap>
+
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        orderId, define, createTime, sellsUsers, product, quantity, productPrice, total, costSum, profit
+    </sql>
+
+
+
+
+    <!-- 查询合同,包含客户信息-->
+    <select id="selectOrder2021" parameterType="string" resultMap="BaseResultMap">
+        select o.*,s.* from gjx_order o inner join gjx_shopper s on o.define=s.id
+        where
+        o.orderName=#{orderName}
+
+
+    </select>
+
+
+
+    <!-- 查询define信息 -->
+    <select id="findDefine" resultType="com.jsh.erp.datasource.bean.GjxShopper">
+        select * from gjx_shopper
+         where
+         id=#{define}
+
+    </select>
+
+
+    <!-- 查询商品信息 -->
+    <select id="findProduct" resultType="com.jsh.erp.datasource.bean.GjxProduct">
+        select * from gjx_product
+        where
+        id=#{product}
+
+    </select>
+
+
+    <!-- 查询销售信息 -->
+    <select id="findSellsUsers" resultType="com.jsh.erp.datasource.bean.GjxSellsuser">
+        select * from gjx_sellsUser
+        where
+        id=#{sellsUsers}
+    </select>
+
+
+
+
+    <!-- 自定义插入记录 -->
+    <insert id="inserOrder1" parameterType="com.jsh.erp.datasource.bean.GjxShopper">
+
+
+         INSERT INTO gjx_order(orderId,define,createTime,product,quantity,productPrice,total,costSum,profit,orderName)
+         values (#{orderId},#{define.id},#{createTime},#{product.id},#{quantity},#{productPrice},#{total},#{costSum},#{profit},#{orderName})
+
+
+    </insert>
+
+
+
+
+
+
+
+
+
+</mapper>

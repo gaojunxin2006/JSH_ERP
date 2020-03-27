@@ -20,11 +20,11 @@ public class Shopper2020 {
 
 
     //客户名称
-    private String Shopper_name;
+    private String shopper_name;
 
 
     //联系人
-    private String Contacts_name;
+    private String contacts_name;
 
 
     //手机
